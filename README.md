@@ -38,7 +38,7 @@ The Vue.js QuickStart Extension is a Visual Studio Code extension that allows yo
 
 ## Contributing
 
-Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue on the [GitHub repository](https://github.com/jonatasperaza/CSS-VALIDATOR).
+Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue on the [GitHub repository](https://github.com/jonatasperaza/css-validator).
 
 ## License
 

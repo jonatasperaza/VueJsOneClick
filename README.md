@@ -1,71 +1,52 @@
-# css-validator README
+# Vue.js QuickStart Extension
 
-This is the README for your extension "css-validator". After writing up a brief description, we recommend including the following sections.
+![Vue.js Logo](https://vuejs.org/images/logo.png)
+
+The Vue.js QuickStart Extension is a Visual Studio Code extension that allows you to create Vue.js applications with ease.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **One-Click Vue.js Application Creation:** Create a new Vue.js application with just one click.
+- **Custom Project Name:** You can specify a custom project name for your Vue.js application.
+- **Default Configuration:** The extension uses default configurations, so you don't have to make choices during project creation.
+- **Saves Time:** Quickly start your Vue.js project without the hassle of manual setup.
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Install Visual Studio Code (VS Code) if you haven't already.
+2. Search for "Vue.js QuickStart" in the VS Code Extensions Marketplace.
+3. Click "Install" to install the extension.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Usage
+
+1. Open Visual Studio Code.
+2. Click on the Extensions icon in the sidebar.
+3. Search for "Vue.js QuickStart" and click "Install" if not already installed.
+4. Open or create a new workspace directory.
+5. Click on the "Vue.js QuickStart" icon in the sidebar.
+6. Enter the desired project name and press Enter.
+7. The extension will create a new Vue.js project in your workspace with default settings.
+8. You're ready to start coding your Vue.js application!
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- None at the moment.
 
-## Release Notes
+## Contributing
 
-Users appreciate release notes as you update your extension.
+Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue on the [GitHub repository](https://github.com/jonatasperaza/CSS-VALIDATOR).
 
-### 1.0.0
+## License
 
-Initial release of ...
+This extension is licensed under the [MIT License](LICENSE.md).
 
-### 1.0.1
+## Acknowledgments
 
-Fixed issue #.
+- Thank you to the Vue.js team for creating such an amazing framework.
+- Inspired by the need for a quick way to start Vue.js projects.
 
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Happy coding with Vue.js!

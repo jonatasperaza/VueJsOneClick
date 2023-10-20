@@ -51,7 +51,9 @@ function isNpmInstalled(): boolean {
 
     async function installVueCLI(): Promise<boolean> {
     try {
-        await exec('npm install -g @vue/cli');
+        vscode.window.showInformationMessage('Vue sendo instalado caralho');
+        await exec('npm init -y');
+        await exec('npm install vue@latest');
         vscode.window.showInformationMessage('Vue CLI has been installed successfully.');
         return true;
     } catch (error: any) {

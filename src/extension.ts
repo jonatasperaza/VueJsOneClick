@@ -1,52 +1,74 @@
 import * as vscode from 'vscode';
-import axios, { AxiosResponse } from 'axios';
+import { promisify } from 'util';
+import { spawn, spawnSync } from 'child_process';
+import * as path from 'path';
+import * as fs from 'fs';
 
-interface W3CValidationMessage {
-    type: string;
-    subType: string;
-    lastLine: number;
-    lastColumn: number;
-    message: string;
-}
+const exec = promisify(require('child_process').exec);
 
 export function activate(context: vscode.ExtensionContext) {
-    const disposable = vscode.commands.registerCommand('extension.validateHTML', async () => {
-        const editor = vscode.window.activeTextEditor;
-        if (!editor || editor.document.languageId !== 'html') {
-            vscode.window.showErrorMessage('Please open an HTML document.');
-            return;
-        }
+    console.log('Vue One-Click extension is active.');
 
-        const document = editor.document;
-        const text = document.getText();
-
+    const disposable = vscode.commands.registerCommand('vueOneClick.install', async () => {
         try {
-            const response: AxiosResponse<{ messages: W3CValidationMessage[] }> = await axios.post(
-                'https://validator.w3.org/nu/',
-                text,
-                {
-                    headers: {
-                        'Content-Type': 'text/html; charset=utf-8',
-                    },
-                }
-            );
+            if (!isNpmInstalled()) {
+                vscode.window.showErrorMessage('npm is not installed. Please install npm to use this extension.');
+                return;
+            }
 
-            console.log('W3C API Response:', response.data); // Adicionando log da resposta
+            const projectFolderName = await vscode.window.showInputBox({
+                prompt: 'Enter the name of the project folder',
+                placeHolder: 'my-vue-project',
+            });
 
-            if (response.data && response.data.messages) {
-                if (response.data.messages.length === 0) {
-                    vscode.window.showInformationMessage('HTML is valid according to W3C validation.');
-                } else {
-                    vscode.window.showErrorMessage(`HTML contains validation errors according to W3C validation. Errors: ${response.data.messages.length}`);
+            if (!projectFolderName) {
+                return; // O usuário cancelou a entrada.
+            }
+
+            if (await installVueCLI()) {
+                if (await createVueProject(projectFolderName)) {
+                    vscode.window.showInformationMessage(`Vue.js project '${projectFolderName}' has been created.`);
                 }
-            } else {
-                vscode.window.showErrorMessage('Unable to determine validation result. No messages found.');
             }
         } catch (error: any) {
-            console.error('Error while validating HTML:', error); // Adicionando log de erro
-            vscode.window.showErrorMessage('Error while validating HTML: ' + error.message);
+            vscode.window.showErrorMessage('Error: ' + error.message);
         }
     });
 
     context.subscriptions.push(disposable);
+}
+
+function isNpmInstalled(): boolean {
+    try {
+        const result = spawnSync('npm', ['-v'], {
+            shell: true,
+        });
+        return result.status === 0;
+    } catch (error: any) {
+        return false;
+    }
+}
+
+    async function installVueCLI(): Promise<boolean> {
+    try {
+        await exec('npm install -g @vue/cli');
+        vscode.window.showInformationMessage('Vue CLI has been installed successfully.');
+        return true;
+    } catch (error: any) {
+        vscode.window.showErrorMessage('Error installing Vue CLI via npm: ' + error.message);
+        return false;
+    }
+}
+
+async function createVueProject(projectFolderName: string): Promise<boolean> {
+    const projectFolderPath = path.join(vscode.workspace.rootPath || '', projectFolderName);
+    
+    try {
+        fs.mkdirSync(projectFolderPath);
+        await exec(`vue create ${projectFolderName}`, { cwd: vscode.workspace.rootPath });
+        return true;
+    } catch (error: any) {
+        vscode.window.showErrorMessage('Error creating the Vue.js project: ' + error.message);
+        return false;
+    }
 }

@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.validateHTML",
-        "title": "css-validator"
+        "command": "vueOneClick.install",
+        "title": "one click vue install"
       }
     ]
   },
@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "axios": "^1.5.1",
+    "child_process": "^1.0.2",
     "stylelint-vscode": "^7.0.0-6",
     "w3c-css-validator": "^1.3.1"
   }

@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { promisify } from 'util';
-import { spawn, spawnSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -49,11 +49,10 @@ function isNpmInstalled(): boolean {
     }
 }
 
-    async function installVueCLI(): Promise<boolean> {
+async function installVueCLI(): Promise<boolean> {
     try {
-        vscode.window.showInformationMessage('Vue sendo instalado caralho');
-        await exec('npm init -y');
-        await exec('npm install vue@latest');
+        vscode.window.showInformationMessage('Vue CLI is being installed.');
+        await exec('npm install -g @vue/cli');
         vscode.window.showInformationMessage('Vue CLI has been installed successfully.');
         return true;
     } catch (error: any) {
@@ -66,8 +65,8 @@ async function createVueProject(projectFolderName: string): Promise<boolean> {
     const projectFolderPath = path.join(vscode.workspace.rootPath || '', projectFolderName);
     
     try {
-        fs.mkdirSync(projectFolderPath);
-        await exec(`vue create ${projectFolderName}`, { cwd: vscode.workspace.rootPath });
+        vscode.window.showInformationMessage('Creating Vue.js project...');
+        await exec(`vue create --preset default ${projectFolderName}`, { cwd: vscode.workspace.rootPath });
         return true;
     } catch (error: any) {
         vscode.window.showErrorMessage('Error creating the Vue.js project: ' + error.message);

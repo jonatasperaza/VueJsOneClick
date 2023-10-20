@@ -1,39 +1,52 @@
 import * as vscode from 'vscode';
-import * as stylelintVSCode from 'stylelint-vscode';
+import axios, { AxiosResponse } from 'axios';
+
+interface W3CValidationMessage {
+    type: string;
+    subType: string;
+    lastLine: number;
+    lastColumn: number;
+    message: string;
+}
 
 export function activate(context: vscode.ExtensionContext) {
-    const disposable = vscode.languages.registerDocumentRangeFormattingEditProvider(
-        { language: 'css' },
-        {
-            provideDocumentRangeFormattingEdits(
-                document: vscode.TextDocument,
-                range: vscode.Range,
-                options: vscode.FormattingOptions,
-                token: vscode.CancellationToken
-            ): vscode.ProviderResult<vscode.TextEdit[]> {
-                const text = document.getText(range);
-                const uri = document.uri.fsPath;
-
-                return stylelintVSCode.processText(uri, text, { config: '.stylelintrc' })
-                    .then((results: any) => {
-                        const edits: vscode.TextEdit[] = [];
-
-                        for (const result of results) {
-                            for (const warning of result.warnings) {
-                                const startPos = document.positionAt(warning.line - 1, warning.column - 1);
-                                const endPos = document.positionAt(warning.line - 1, warning.column);
-                                const range = new vscode.Range(startPos, endPos);
-                                const newText = ''; // Corrija o erro aqui, se necessário
-                                const edit = new vscode.TextEdit(range, newText);
-                                edits.push(edit);
-                            }
-                        }
-
-                        return edits;
-                    });
-            }
+    const disposable = vscode.commands.registerCommand('extension.validateHTML', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor || editor.document.languageId !== 'html') {
+            vscode.window.showErrorMessage('Please open an HTML document.');
+            return;
         }
-    );
+
+        const document = editor.document;
+        const text = document.getText();
+
+        try {
+            const response: AxiosResponse<{ messages: W3CValidationMessage[] }> = await axios.post(
+                'https://validator.w3.org/nu/',
+                text,
+                {
+                    headers: {
+                        'Content-Type': 'text/html; charset=utf-8',
+                    },
+                }
+            );
+
+            console.log('W3C API Response:', response.data); // Adicionando log da resposta
+
+            if (response.data && response.data.messages) {
+                if (response.data.messages.length === 0) {
+                    vscode.window.showInformationMessage('HTML is valid according to W3C validation.');
+                } else {
+                    vscode.window.showErrorMessage(`HTML contains validation errors according to W3C validation. Errors: ${response.data.messages.length}`);
+                }
+            } else {
+                vscode.window.showErrorMessage('Unable to determine validation result. No messages found.');
+            }
+        } catch (error: any) {
+            console.error('Error while validating HTML:', error); // Adicionando log de erro
+            vscode.window.showErrorMessage('Error while validating HTML: ' + error.message);
+        }
+    });
 
     context.subscriptions.push(disposable);
 }

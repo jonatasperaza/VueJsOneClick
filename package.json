@@ -36,13 +36,16 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@babel/plugin-transform-class-properties": "^7.22.5",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.11",
+    "@babel/plugin-transform-optional-chaining": "^7.23.0",
     "@types/mocha": "^10.0.2",
     "@types/node": "18.x",
     "@types/vscode": "^1.83.0",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
     "@vscode/test-electron": "^2.3.4",
-    "eslint": "^8.50.0",
+    "eslint": "^8.52.0",
     "glob": "^10.3.3",
     "mocha": "^10.2.0",
     "ts-loader": "^9.4.4",
@@ -54,6 +57,7 @@
     "axios": "^1.5.1",
     "child_process": "^1.0.2",
     "stylelint-vscode": "^7.0.0-6",
+    "sudo-prompt": "^9.2.1",
     "w3c-css-validator": "^1.3.1"
   }
 }

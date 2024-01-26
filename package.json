@@ -1,7 +1,7 @@
 {
-  "name": "css-validator",
-  "displayName": "CSS-Validator",
-  "description": "css-validator",
+  "name": "vuejsoneclick",
+  "displayName": "vuejsoneclick",
+  "description": "vuejsoneclick",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.83.0"

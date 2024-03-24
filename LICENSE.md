@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) [2023] [Jonatas Silva Peraza]
+Copyright (c) 2024 Jonatas Silva Peraza
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
